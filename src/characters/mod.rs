@@ -1,20 +1,8 @@
+pub mod player;
+
 use crate::sdl_thing::{HEIGHT, WIDTH};
 use sdl2::{pixels::Color, rect::Rect};
 
-#[derive(Debug,PartialEq, Eq, Hash)]
-pub enum Controller {
-    Up,
-    UpLeft,
-    UpRight,
-
-    Down,
-    DownLeft,
-    DownRight,
-
-    Left,
-    Right,
-
-}
 
 #[allow(unused)]
 #[derive(Debug)]
@@ -26,6 +14,21 @@ pub struct Character {
     speed: i32,
 }
 
+#[derive(Debug, PartialEq, Eq, Hash)]
+pub enum Controller {
+    Up,
+    UpLeft,
+    UpRight,
+
+    Down,
+    DownLeft,
+    DownRight,
+
+    Left,
+    Right,
+}
+
+
 impl Character {
     pub fn movement(&mut self, control: Controller) {
         match control {
@@ -36,7 +39,7 @@ impl Character {
             Controller::DownLeft => {
                 self.rect.set_y(self.rect.y + self.speed);
                 self.rect.set_x(self.rect.x - self.speed);
-            },
+            }
             Controller::DownRight => {
                 self.rect.set_y(self.rect.y + self.speed);
                 self.rect.set_x(self.rect.x + self.speed);

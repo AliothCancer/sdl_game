@@ -1,0 +1,3 @@
+
+Notes:
+SdlWindow holds the program state, the state State::Stop stops the main loop

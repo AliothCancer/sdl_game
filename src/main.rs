@@ -1,18 +1,19 @@
 pub mod characters;
-pub mod sdl_thing;
 pub mod keyboard_controls;
+pub mod sdl_thing;
 
-use characters::Character;
+
 use sdl2::{self, pixels::Color};
 use std::time::Duration;
 
+use characters::player;
 use sdl_thing::State;
 
 fn main() {
     let mut my_window = sdl_thing::get_window();
     my_window.setup();
 
-    let player = Character::default_player("ValmerWolf".to_string());
+    let player = player::create();
     my_window.add_characters(player);
 
     let mut i = 0;
