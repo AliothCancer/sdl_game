@@ -22,7 +22,7 @@ fn main() {
         my_window.canvas.set_draw_color(Color::RGB(i, 64, 255 - i));
         my_window.canvas.clear();
 
-        my_window.from_message_to_action();
+        my_window.messages_mapper();
         my_window.draw_characters();
 
         std::thread::sleep(Duration::new(0, 1_000_000_000u32 / 60));

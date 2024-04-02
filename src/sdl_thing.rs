@@ -1,3 +1,5 @@
+use std::collections::HashSet;
+
 use sdl2::keyboard::Scancode;
 use sdl2::pixels::Color;
 use sdl2::render::Canvas;
@@ -57,7 +59,7 @@ impl SdlWindow {
         self.canvas.present();
     }
     
-    fn event_mapper(&mut self) -> impl Iterator<Item = Message>{
+    fn event_mapper(&mut self) -> HashSet<Message>{
 
         self.event.pump_events();
         
@@ -75,20 +77,17 @@ impl SdlWindow {
                 Message::NotMapped => None,
                 _ => Some(mess)
             }
-        });
+        }).collect();
         
-        //std::thread::sleep(Duration::from_millis(100));
         messages
     }
 
-    pub fn from_message_to_action(&mut self) {
-        let message = self.from_event_to_message_v2();
-
-        match message {
-            Message::WindowControl(State::Stop) => self.state = State::Stop,
-            Message::PlayerControl(control) => self.update_characters(control),
-            _ => (),
+    pub fn messages_mapper(&mut self) {
+        let messages = self.event_mapper();
+        if messages.contains(&Message::WindowControl(State::Stop)){
+            self.state = State::Stop
         }
+        println!("{:?}",messages);
     }
     fn update_characters(&mut self, control: Controller) {
         self.characters[0].movement(control);
@@ -96,14 +95,14 @@ impl SdlWindow {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug,PartialEq, Eq, Hash)]
 enum Message {
     PlayerControl(Controller),
     WindowControl(State),
     NotMapped
 }
 
-#[derive(Debug)]
+#[derive(Debug,PartialEq, Eq, Hash)]
 pub enum State {
     Continue,
     Stop,

@@ -1,7 +1,7 @@
 use crate::sdl_thing::{HEIGHT, WIDTH};
 use sdl2::{pixels::Color, rect::Rect};
 
-#[derive(Debug)]
+#[derive(Debug,PartialEq, Eq, Hash)]
 pub enum Controller {
     Up,
     UpLeft,
