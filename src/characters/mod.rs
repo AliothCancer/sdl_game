@@ -1,8 +1,7 @@
 pub mod player;
 
-use crate::sdl_thing::{HEIGHT, WIDTH};
+use crate::sdl_thing::window::{HEIGHT, WIDTH};
 use sdl2::{pixels::Color, rect::Rect};
-
 
 #[allow(unused)]
 #[derive(Debug)]
@@ -14,7 +13,7 @@ pub struct Character {
     speed: i32,
 }
 
-#[derive(Debug, PartialEq, Eq, Hash)]
+#[derive(Debug, PartialEq, Eq, Hash,Clone, Copy)]
 pub enum Controller {
     Up,
     UpLeft,
@@ -27,7 +26,6 @@ pub enum Controller {
     Left,
     Right,
 }
-
 
 impl Character {
     pub fn movement(&mut self, control: Controller) {
@@ -61,15 +59,6 @@ impl Character {
             hp: 100,
             rect: Rect::new(coor.0, coor.1, 100, 100), // Default rect dimensions
             color: Color::BLUE,                        // Default color
-            speed: 10,
-        }
-    }
-    pub fn new_player(name: String, rect: Rect) -> Self {
-        Character {
-            name,
-            hp: 100,
-            rect,
-            color: Color::BLUE,
             speed: 10,
         }
     }

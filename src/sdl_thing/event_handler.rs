@@ -1,12 +1,12 @@
-
 use std::collections::HashSet;
 
 use sdl2::{keyboard::Scancode, EventPump};
 
-use crate::sdl_thing::State;
+use crate::characters::Controller;
+use crate::keyboard_controls::Message;
+use crate::sdl_thing::window::State;
 
-
-fn event_mapper(event: &mut EventPump) -> HashSet<Message> {
+pub fn maps_events_to_messages(event: &mut EventPump) -> HashSet<Message> {
     event.pump_events();
 
     let kbd_state = event.keyboard_state();
@@ -29,4 +29,10 @@ fn event_mapper(event: &mut EventPump) -> HashSet<Message> {
         .collect();
 
     messages
+}
+
+// A trait that allow the struct for which is impl to be updated by an HashSet<Message>
+#[allow(unused)]
+pub trait MessageExecutor {
+    fn execute(&mut self, messages: &HashSet<Message>) {}
 }
