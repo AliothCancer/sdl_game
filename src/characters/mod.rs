@@ -13,7 +13,7 @@ pub struct Character {
     speed: i32,
 }
 
-#[derive(Debug, PartialEq, Eq, Hash,Clone, Copy)]
+#[derive(Debug, PartialEq, Eq, Hash, Clone, Copy)]
 pub enum Controller {
     Up,
     UpLeft,

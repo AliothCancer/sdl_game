@@ -1,6 +1,5 @@
 use crate::keyboard_controls::Message;
 use crate::sdl_thing::event_handler::MessageExecutor;
-use std::collections::HashSet;
 
 use super::Character;
 
@@ -9,10 +8,10 @@ pub fn create(name: &str) -> Character {
 }
 
 impl MessageExecutor for Character {
-    fn execute(&mut self, messages: &HashSet<Message>) {
-        messages.iter().for_each(|message| {
+    fn execute(&mut self, messages: [Message; 5]) {
+        messages.into_iter().for_each(|message| {
             if let Message::PlayerControl(control) = message {
-                self.movement(*control)
+                self.movement(control)
             }
         })
     }
