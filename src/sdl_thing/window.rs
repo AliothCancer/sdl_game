@@ -74,7 +74,7 @@ impl SdlWindow {
     }
 }
 
-impl Default for SdlWindow{
+impl Default for SdlWindow {
     fn default() -> Self {
         Self::new()
     }
