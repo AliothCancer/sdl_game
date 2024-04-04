@@ -1,3 +1,4 @@
+use arrayvec::ArrayVec;
 use sdl2::pixels::Color;
 use sdl2::render::Canvas;
 use sdl2::video::Window;
@@ -30,8 +31,8 @@ impl SdlWindow {
     }
     pub fn update(&mut self) {
         self.event_handler.get_messages();
-        self.execute(self.event_handler.messages);
-        self.characters[0].execute(self.event_handler.messages);
+        self.execute(self.event_handler.messages.clone());
+        self.characters[0].execute(self.event_handler.messages.clone());
     }
     pub fn draw_characters(&mut self) {
         self.characters.iter().for_each(|character| {
@@ -54,7 +55,7 @@ impl SdlWindow {
 
         let event_handler = EventHandler {
             event: context.event_pump().unwrap(),
-            messages: [Message::NotMapped; 5],
+            messages: ArrayVec::<Message,5>::new(),
         };
         Self {
             canvas,
@@ -81,7 +82,7 @@ impl Default for SdlWindow {
 }
 
 impl MessageExecutor for SdlWindow {
-    fn execute(&mut self, messages: [Message; 5]) {
+    fn execute(&mut self, messages: ArrayVec<Message, 5>) {
         messages.into_iter().for_each(|message| {
             if let Message::WindowControl(state) = message {
                 self.state = state;

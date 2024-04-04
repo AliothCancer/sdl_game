@@ -7,7 +7,6 @@ use crate::sdl_thing::window::State;
 pub enum Message {
     PlayerControl(Controller),
     WindowControl(State),
-    NotMapped,
 }
 
 

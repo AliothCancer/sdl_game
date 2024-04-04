@@ -16,13 +16,7 @@ pub struct Character {
 #[derive(Debug, PartialEq, Eq, Hash, Clone, Copy)]
 pub enum Controller {
     Up,
-    UpLeft,
-    UpRight,
-
     Down,
-    DownLeft,
-    DownRight,
-
     Left,
     Right,
 }
@@ -33,23 +27,7 @@ impl Character {
             Controller::Down => self.rect.set_y(self.rect.y + self.speed),
             Controller::Up => self.rect.set_y(self.rect.y - self.speed),
             Controller::Left => self.rect.set_x(self.rect.x - self.speed),
-            Controller::Right => self.rect.set_x(self.rect.x + self.speed),
-            Controller::DownLeft => {
-                self.rect.set_y(self.rect.y + self.speed);
-                self.rect.set_x(self.rect.x - self.speed);
-            }
-            Controller::DownRight => {
-                self.rect.set_y(self.rect.y + self.speed);
-                self.rect.set_x(self.rect.x + self.speed);
-            }
-            Controller::UpLeft => {
-                self.rect.set_y(self.rect.y - self.speed);
-                self.rect.set_x(self.rect.x - self.speed)
-            }
-            Controller::UpRight => {
-                self.rect.set_y(self.rect.y - self.speed);
-                self.rect.set_x(self.rect.x + self.speed);
-            }
+            Controller::Right => self.rect.set_x(self.rect.x + self.speed)
         }
     }
     pub fn default_player(name: String) -> Self {
