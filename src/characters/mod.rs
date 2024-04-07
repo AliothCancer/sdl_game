@@ -30,7 +30,7 @@ pub enum Controller {
 
 impl Character {
     pub fn movement(&mut self, control: Controller) {
-        let diagonal_increment = (0.5*(self.speed as f32).powi(2)).powf(0.5) as i32;
+        let diagonal_increment = (self.speed as f32 / (0.5_f32).sqrt()) as i32;
         let ortogonal_increment = self.speed;
         match control {
             Controller::Down => self.rect.set_y(self.rect.y + ortogonal_increment),
