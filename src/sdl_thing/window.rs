@@ -8,8 +8,8 @@ use crate::{characters::Character, keyboard_controls::Message};
 use super::event_handler::{EventHandler, MessageExecutor};
 
 const TITLE: &str = "WINDOW TITLE";
-pub const WIDTH: u32 = 800;
-pub const HEIGHT: u32 = 600;
+pub const WINDOW_WIDTH: u32 = 1000;
+pub const WINDOW_HEIGHT: u32 = 900;
 
 #[derive(Debug, PartialEq, Eq, Hash, Clone, Copy)]
 pub enum State {
@@ -31,7 +31,7 @@ impl SdlWindow {
     }
     pub fn update(&mut self) {
         self.event_handler.get_messages();
-        self.execute(self.event_handler.messages.clone());
+        self.execute(self.event_handler.window_message);
         self.characters[0].execute(self.event_handler.messages.clone());
     }
     pub fn draw_characters(&mut self) {
@@ -47,7 +47,7 @@ impl SdlWindow {
 
         let video_subsystem = context.video().unwrap();
         let window = video_subsystem
-            .window(TITLE, WIDTH, HEIGHT)
+            .window(TITLE, WINDOW_WIDTH, WINDOW_HEIGHT)
             .position_centered()
             .build()
             .unwrap();
@@ -56,6 +56,7 @@ impl SdlWindow {
         let event_handler = EventHandler {
             event: context.event_pump().unwrap(),
             messages: ArrayVec::<Message,5>::new(),
+            window_message: Message::WindowControl(State::Continue)
         };
         Self {
             canvas,
@@ -81,12 +82,10 @@ impl Default for SdlWindow {
     }
 }
 
-impl MessageExecutor for SdlWindow {
-    fn execute(&mut self, messages: ArrayVec<Message, 5>) {
-        messages.into_iter().for_each(|message| {
-            if let Message::WindowControl(state) = message {
+impl MessageExecutor<Message> for SdlWindow {
+    fn execute(&mut self, message: Message) {
+        if let Message::WindowControl(state) = message {
                 self.state = state;
             }
-        })
     }
 }
